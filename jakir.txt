@@ -1,0 +1,155 @@
+from tkinter import *
+
+window = Tk()
+window.title('DOKANI')
+window.geometry("800x800")
+
+main_frame = Frame(window, bg='gray')
+main_frame.place(x=0, y=0, width=800, height=800)
+
+lst1=[]
+lst2=[]
+lst3=[]
+name=[]
+date=[]
+
+def clear():
+    lst1.clear()
+    lst2.clear()
+    lst3.clear()
+    name.clear()
+    date.clear()
+
+def frame_dekhaw(f):
+    f.tkraise()
+
+
+def frame0():
+    f=Frame(window,bg="red")
+    f.place(x=0,y=0,width=800,height=800)
+    ln=len(lst2)
+    x=0
+    for i in range(ln):
+        x+=(int(lst2[i])*int(lst3[i]))
+
+    total = Label(f, text="Total :  "+str(x), bg="red", font=("times new roman", 20, "bold"))
+    total.place(x=320, y=600)
+
+    l1=Label(f,text="Name:",bg="red",font=("times new roman", 20, "bold"))
+    l1.place(x=10,y=20)
+    l1 = Label(f, text=name, bg="white", font=("times new roman", 20, "bold"))
+    l1.place(x=100, y=20,width=300,height=28)
+    l2 = Label(f, text="Date:", bg="red", font=("times new roman", 20, "bold"))
+    l2.place(x=420, y=20)
+    l2 = Label(f, text=date, bg="white", font=("times new roman", 20, "bold"))
+    l2.place(x=500, y=20, width=250, height=28)
+
+
+
+
+
+
+
+    x=Label(f, text="Name", bg='#AEB6BF', width=17, fg='black',
+          font=("times new roman", 13, "bold"))
+
+    y=Label(f, text="Price", bg='#AEB6BF', width=17, fg='black',
+          font=("times new roman", 13, "bold"))
+    z=Label(f, text="Amount", bg='#AEB6BF', width=17, fg='black',
+          font=("times new roman", 13, "bold"))
+    x.place(x=120, y=120)
+    y.place(x=300, y=120)
+    z.place(x=480, y=120)
+    def data():
+        l=len(lst1)
+        for i in range(l):
+            Label(frame, text=lst1[i], bg='#AEB6BF', width=17, fg='black',
+                    font=("times new roman", 13, "bold")).grid(row=i, column=0)
+            Label(frame, text=lst2[i], bg='#AEB6BF', width=17, fg='black',
+                    font=("times new roman", 13, "bold")).grid(row=i, column=1)
+            Label(frame, text=lst3[i], bg='#AEB6BF', width=17, fg='black',
+                  font=("times new roman", 13, "bold")).grid(row=i, column=2)
+
+    def myfunction(event):
+        canvas.configure(scrollregion=canvas.bbox("all"), width=510, height=400)
+
+    myframe = Frame(f, width=280, height=240, bd=0, bg="red")
+    myframe.place(x=120, y=150)
+
+    canvas = Canvas(myframe)
+    frame = Frame(canvas)
+    myscrollbar = Scrollbar(myframe, orient="vertical", command=canvas.yview)
+    canvas.configure(yscrollcommand=myscrollbar.set)
+
+    myscrollbar.pack(side="right", fill="y")
+    canvas.pack(side="left")
+    canvas.create_window((0, 0), window=frame, anchor='nw')
+    frame.bind("<Configure>", myfunction)
+    data()
+
+    btn = Button(f, text="back", fg='blue', font=("Helvetica", 16), command=lambda: [clear(),frame_dekhaw(main_frame)])
+    btn.place(x=308, y=700)
+
+
+def frame1(frame):
+    lbl = Label(frame, text="Welcome To  DOKANI", fg='black', font=("Helvetica", 20))
+    lbl.place(x=90, y=40)
+
+    lbl = Label(frame, text="NAME", fg='black', font=("Helvetica", 10))
+    lbl.place(x=50, y=120)
+    fld1 = Entry(frame, bd=12)
+    fld1.place(x=50, y=160)
+
+
+    lbl = Label(frame, text="Date of Shopping", fg='black', font=("Helvetica", 10))
+    lbl.place(x=50, y=360)
+    fld4 = Entry(frame, bd=12)
+    fld4.place(x=50, y=400)
+
+
+    def data_add():
+        name.append(fld1.get())
+        date.append(fld4.get())
+
+    def product_function():
+        frame3 = Frame(main_frame, bg='white')
+        frame3.place(y=100, x=360, width=340, height=340)
+
+        lbl = Label(frame3, text=" Product Name ", fg='black', font=("Helvetica", 10))
+        lbl.place(x=40, y=80)
+
+        txtfld1 = Entry(frame3, bd=12)
+        txtfld1.place(x=40, y=100)
+
+        lbl = Label(frame3, text="Price Ammount of Product", fg='black', font=("Helvetica", 10))
+        lbl.place(x=40, y=160)
+
+        txtfld2 = Entry(frame3, bd=12)
+        txtfld2.place(x=40, y=180)
+
+        lbl = Label(frame3, text="Ammount of the Product", fg='black', font=("Helvetica", 10))
+        lbl.place(x=40, y=240)
+
+        txtfld3 = Entry(frame3, bd=12)
+        txtfld3.place(x=40, y=260)
+        def add():
+            if txtfld1.get()!='' and txtfld2.get()!='' and txtfld3.get()!='':
+                lst1.append(txtfld1.get())
+                lst2.append(txtfld2.get())
+                lst3.append(txtfld3.get())
+
+
+        btn = Button(frame, text="ADD", fg='bLACK', font=("Helvetica", 16), command=lambda: [add(), product_function()])
+        btn.place(x=480, y=460)
+
+    product_function()
+
+
+    btn = Button(frame, text="ENTER ", fg='bLACK', font=("Helvetica", 16), command=lambda :[data_add(),frame0()])
+    btn.place(x=308, y=560)
+
+
+frame1(main_frame)
+window.geometry("800x800")
+
+window.mainloop()
